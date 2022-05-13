@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private var Results: SoapPrimitive? = null
 
     private val URL = "https://orapiweb.pttor.com/oilservice/OilPrice.asmx"
-//    private val NAMESPACE = "http://www.pttplc.com/ptt_webservice/"
     private val NAMESPACE = "http://www.pttor.com"
     private val METHOD_NAME = "CurrentOilPrice"
     private val SOAP_ACTION = "http://www.pttor.com/CurrentOilPrice"
@@ -52,13 +51,15 @@ class MainActivity : AppCompatActivity() {
                     val resultRequestSOAP = envelope.response as SoapPrimitive
                     Results = resultRequestSOAP
 
+                    Log.e("WebServiceExample", "Response : $Results")
+
                 } catch (e: Exception) {
                     Results = null
                 } finally {
                     if (Results == null) {
                         Log.e("WebServiceExample", "Soap object Error")
                     } else {
-                        pareser()
+                        setListItem()
                     }
                 }
             }
@@ -66,17 +67,10 @@ class MainActivity : AppCompatActivity() {
         s.start()
     }
 
-    fun pareser() {
+    fun setListItem() {
         ListitemXML.add(Results.toString())
-        Listing()
-    }
-
-    fun Listing() {
         val run = Runnable {
-            AdapterXML = ArrayAdapter(
-                this@MainActivity, android.R.layout.simple_list_item_1,
-                ListitemXML
-            )
+            AdapterXML = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, ListitemXML)
             AdapterXML?.notifyDataSetChanged()
             viewBinding.listItem.adapter = AdapterXML
         }
