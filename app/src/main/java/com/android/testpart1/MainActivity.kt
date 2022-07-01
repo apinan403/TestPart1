@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                     val androidHttpTransport = HttpTransportSE(URL)
                     androidHttpTransport.call(SOAP_ACTION, envelope)
 
+                    //Start Edit
                     val resultRequestSOAP = envelope.response as SoapPrimitive
                     Results = resultRequestSOAP
 
